@@ -1652,17 +1652,22 @@ body {
   .mobile-sns-links {
     margin-top: 28px;
     display: flex;
-    gap: 16px;
+    gap: 28px;
   }
 
   /* プレースホルダーアイコン（後でロゴ画像に差し替える） */
   .sns-icon-placeholder {
     display: block;
-    width: 28px;
-    height: 28px;
-    border: 2px solid #cbfb07;
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
     transition: opacity 0.2s;
+  }
+
+  .sns-icon-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   .sns-icon-placeholder:hover {
@@ -1690,7 +1695,7 @@ body {
     color: transparent;
     -webkit-text-stroke: 1px #2f2f2c; /* 添付画像の白抜き文字を再現 */
     letter-spacing: -0.03em;
-    font-family: inherit;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1;
   }
 

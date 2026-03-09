@@ -105,19 +105,6 @@
       </nav>
     </header>
 
-    <!-- ▼ スマホ用 ヘッダーバー（すりガラス追従） ▼ -->
-    <div class="mobile-header-bar">
-      <a href="#fv" class="logo">NOI</a>
-
-      <div class="mobile-header-right">
-        <div class="mobile-menu-text-btn" id="mobileMenuBtn">ME<br />NU</div>
-        <div class="mobile-close-x" id="mobileCloseBtn">
-          <span style="transform: rotate(45deg)"></span>
-          <span style="transform: rotate(-45deg)"></span>
-        </div>
-      </div>
-    </div>
-
     <!-- ▼ スマホ用 フルスクリーンメニュー（半円展開） ▼ -->
     <div class="mobile-fullscreen-menu" id="mobileFullscreenMenu">
       <div class="menu-bg-circle"></div>
@@ -132,18 +119,27 @@
           </ul>
         </nav>
         <div class="mobile-sns-links">
-          <a
-            href="#"
-            target="_blank"
-            class="sns-icon-placeholder"
-            aria-label="Instagram"
-          ></a>
-          <a
-            href="#"
-            target="_blank"
-            class="sns-icon-placeholder"
-            aria-label="X"
-          ></a>
+<!-- hrefにSNSのプロフィールURLを入れ、<img>でアイコン画像を表示する -->
+<a href="https://www.instagram.com/chum.portfolio/" target="_blank" class="sns-icon-placeholder" aria-label="Instagram">
+  <img src="./assets/images/instagram.png" alt="Instagram" />
+</a>
+<a href="https://x.com/chimcham1216" target="_blank" class="sns-icon-placeholder" aria-label="X">
+  <img src="./assets/images/x.png" alt="X" />
+</a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ スマホ用 ヘッダーバー（すりガラス追従） ▼ -->
+    <div class="mobile-header-bar">
+      <a href="#fv" class="logo">NOI</a>
+
+      <div class="mobile-header-right">
+        <div class="mobile-menu-text-btn" id="mobileMenuBtn">ME<br />NU</div>
+        <div class="mobile-close-x" id="mobileCloseBtn">
+          <span style="transform: rotate(45deg)"></span>
+          <span style="transform: rotate(-45deg)"></span>
         </div>
       </div>
     </div>
