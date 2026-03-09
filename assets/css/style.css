@@ -105,7 +105,7 @@ body {
   background-image: url(../video/noise.gif);
   background-repeat: repeat;
   background-size: 200px 200px;
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
 .scene-inner {
@@ -233,6 +233,7 @@ body {
 }
 
 .side-text-scroll span {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 65px;
   font-weight: 900;
   letter-spacing: 0.2em;
@@ -267,8 +268,8 @@ body {
   text-align: center;
   pointer-events: auto;
   text-decoration: none;
-  color: #2f2f2c; /* 初期は黒でスタート */
-  mix-blend-mode: difference; /* 背景色と差分をとって、暗い背景上では明るく反転 */
+  color: #1a1a18; /* はっきり見えるよう濃い色を指定 */
+  mix-blend-mode: normal; /* differenceをやめてそのままの色で表示 */
   transition: opacity 0.3s ease;
 }
 
@@ -498,8 +499,8 @@ body {
 /* Greetingセクションのテキスト配置: 中央寄せ */
 .greeting-text-content {
   margin-top: 64px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 48px;
+  padding-right: 48px;
   position: relative;
   z-index: 20;
   text-align: center;
@@ -1085,7 +1086,7 @@ body {
   transform: translateY(-50%) translateY(0.5px);
 }
 .work-detail-category-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: #888;
@@ -1344,7 +1345,7 @@ body {
   .footer-anim-noi {
     font-size: 44px;
     margin-bottom: 0px;
-    left: -16px; /* paddingを打ち消して左端に貼り付ける */
+    left: 16px; /* 画面内に収める */
   }
   .footer-anim-noise img {
     width: 100px;
@@ -1552,7 +1553,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 90; /* header-bar(100)のすぐ下 */
+    z-index: 200; /* header-bar(100)より上に */
     pointer-events: none; /* 閉じている時は触れない */
     overflow: hidden;
   }
@@ -1724,8 +1725,8 @@ body {
 
   /* Greetingの本文をスマホでは左揃えに（About NOIと同じ余白） */
   .greeting-text-content {
-    padding-left: 48px;
-    padding-right: 24px;
+    padding-left: 64px;
+    padding-right: 48px;
     text-align: left;
   }
 }
@@ -1830,8 +1831,8 @@ body {
 /* バブル本体: それぞれ親コンテナからの絶対位置 */
 .flow-node {
   position: absolute;
-  width: 155px; /* 130px → 155px に拡大 */
-  height: 155px;
+  width: 175px;
+  height: 175px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -1850,20 +1851,20 @@ body {
   color: #2f2f2c;
 }
 .flow-node-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.02em;
   margin-bottom: 2px;
   font-family: "Montserrat", sans-serif;
 }
 .flow-node-sub {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   margin-bottom: 5px;
   opacity: 0.7;
 }
 .flow-node-desc {
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   opacity: 0.85;
@@ -1887,7 +1888,7 @@ body {
 }
 .price-card-header {
   display: inline-block;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
   padding: 3px 10px;
@@ -1898,7 +1899,7 @@ body {
   color: #2f2f2c;
 }
 .price-card-desc {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
   color: #555;
 }
@@ -1913,7 +1914,7 @@ body {
 .price-card-items li {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 14px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   padding-bottom: 6px;
 }
@@ -1925,4 +1926,107 @@ body {
   color: #2f2f2c;
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.03em;
+}
+
+/* ==============================
+   Work Detail Pages (work-01 〜 work-16)
+   レスポンシブ: フォントサイズ拡大
+   10px → 12px / 12px → 14px
+   ============================== */
+@media (max-width: 1000px) {
+  /* カテゴリラベル: 10px → 12px */
+  .work-detail-category-label {
+    font-size: 12px;
+  }
+  /* メタDT（Client / Year 等ラベル）: 10px → 12px */
+  .work-detail-row dt {
+    font-size: 12px;
+  }
+  /* メタDD（値）: 12px → 14px */
+  .work-detail-row dd {
+    font-size: 14px;
+  }
+  /* ギャラリーラベル: 10px → 12px */
+  .gallery-label {
+    font-size: 12px;
+  }
+  /* CTAボタン文字: 10px → 12px */
+  .cta-btn {
+    font-size: 12px;
+  }
+}
+
+/* ==============================
+   Service Page (service.html)
+   レスポンシブ: 12px以下 → 14px
+   ============================== */
+@media (max-width: 1000px) {
+  /* フローノードタイトル: 13px → 14px */
+  .flow-node-title {
+    font-size: 14px;
+  }
+  /* フローノードサブ: 8px → 14px */
+  .flow-node-sub {
+    font-size: 14px;
+  }
+  /* フローノード説明: 8px → 14px */
+  .flow-node-desc {
+    font-size: 14px;
+  }
+  /* 料金カードヘッダー: 10px → 14px */
+  .price-card-header {
+    font-size: 14px;
+  }
+  /* 料金カード説明: 11px → 14px */
+  .price-card-desc {
+    font-size: 14px;
+  }
+  /* 料金カード項目: 11px → 14px */
+  .price-card-items li {
+    font-size: 14px;
+  }
+}
+
+/* ==============================
+    সার্ভিস Page - Flow Nodes
+   レスポンシブ: ノードを大きく・間隔を広げる
+   ============================== */
+@media (max-width: 1000px) {
+  /* ダイアグラム全体の高さを拡大 */
+  .service-flow-diagram {
+    height: 900px;
+  }
+  /* ノードサイズを拡大: 155px → 180px */
+  .flow-node {
+    width: 180px !important;
+    height: 180px !important;
+  }
+  /* 各ノードの位置を間隔が広くなるよう調整 */
+  .flow-node--contact {
+    top: 0px !important;
+    left: 22% !important;
+    transform: translateX(-50%) !important;
+  }
+  /* Planningを少し下げて調整 */
+  .flow-node--planning {
+    top: 240px !important;
+    left: -15px !important;
+    transform: none !important;
+  }
+  /* Shareを少し下に、右に寄せる */
+  .flow-node--share {
+    top: 170px !important;
+    right: -15px !important;
+  }
+  /* 以降のノードも重ならないよう下にずらす */
+  .flow-node--creative {
+    top: 460px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  .flow-node--deliver {
+    top: 680px !important;
+    left: 28% !important;
+    transform: translateX(-50%) !important;
+  }
 }
