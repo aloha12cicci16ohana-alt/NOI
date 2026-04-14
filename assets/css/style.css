@@ -426,10 +426,15 @@ body {
   padding-right: 0;
 }
 #service {
-  padding-top: 168px;
+  padding-top: 260px;
   padding-bottom: 100px;
   padding-left: 0;
   padding-right: 0;
+}
+
+/* Worksの全画面体験の後にServiceタイトルが埋もれないよう大きく */
+.service-title-large {
+  font-size: 48px;
 }
 
 #contact {
@@ -738,6 +743,7 @@ body {
   flex-direction: column;
   justify-content: center;
   background: #111;
+  gap: 2px;
 }
 
 .works-slider-row {
@@ -747,7 +753,6 @@ body {
   width: 100%;
   overflow: hidden;
   position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .works-track {
@@ -785,6 +790,11 @@ body {
   padding: 0;
   flex-shrink: 0;
   position: relative;
+}
+
+/* Row 2: 横長のWeb FV画像は幅を広くして大きく見せる */
+.works-slider-row--wide .works-img-item {
+  width: 480px;
 }
 
 .works-img-item img {
@@ -2067,4 +2077,70 @@ body {
     left: 28% !important;
     transform: translateX(-50%) !important;
   }
+}
+
+/* =====================================================
+   Lightbox
+   ===================================================== */
+.noi-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0);
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  transition: background 0.3s ease;
+}
+.noi-lightbox.is-open {
+  display: flex;
+  background: rgba(0, 0, 0, 0.92);
+}
+.noi-lightbox-img {
+  max-width: 92vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: default;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.6);
+}
+.noi-lightbox.is-open .noi-lightbox-img {
+  opacity: 1;
+  transform: scale(1);
+}
+.noi-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.noi-lightbox-close:hover { opacity: 1; }
+.noi-lightbox-close::before,
+.noi-lightbox-close::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 2px;
+  background: #fff;
+}
+.noi-lightbox-close::before { transform: rotate(45deg); }
+.noi-lightbox-close::after  { transform: rotate(-45deg); }
+
+/* クリック可能な画像にカーソルヒント */
+.gallery-img {
+  cursor: zoom-in;
+}
+.work-detail-hero img {
+  cursor: zoom-in;
 }

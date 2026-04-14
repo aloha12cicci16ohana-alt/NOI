@@ -128,6 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
           worksOverlay.style.opacity = "0";
           isActive = false;
         }
+        // スクロール前に戻ったらintroテキストを復元
+        if (scrolled < 0) {
+          worksIntro.style.opacity = "1";
+        }
         rafId = requestAnimationFrame(tick);
         return;
       }
@@ -199,6 +203,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // rAF 開始
     rafId = requestAnimationFrame(tick);
+  }
+
+  // ===================================================
+  //  Service Section: スクロール連動フェードイン
+  // ===================================================
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    var serviceHeader = document.querySelector("#service .service-header");
+    var serviceContent = document.querySelector("#service .service-text-content");
+
+    if (serviceHeader) {
+      gsap.set(serviceHeader, { opacity: 0, y: 40 });
+      ScrollTrigger.create({
+        trigger: serviceHeader,
+        start: "top 85%",
+        onEnter: function () {
+          gsap.to(serviceHeader, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" });
+        },
+        onLeaveBack: function () {
+          gsap.set(serviceHeader, { opacity: 0, y: 40 });
+        }
+      });
+    }
+
+    if (serviceContent) {
+      gsap.set(serviceContent, { opacity: 0, y: 30 });
+      ScrollTrigger.create({
+        trigger: serviceContent,
+        start: "top 85%",
+        onEnter: function () {
+          gsap.to(serviceContent, { opacity: 1, y: 0, duration: 0.8, delay: 0.15, ease: "power2.out" });
+        },
+        onLeaveBack: function () {
+          gsap.set(serviceContent, { opacity: 0, y: 30 });
+        }
+      });
+    }
   }
 
   // ===================================================
@@ -438,5 +480,52 @@ window.addEventListener("load", () => {
   });
   document.addEventListener("mouseenter", () => {
     cursor.style.opacity = "1";
+  });
+})();
+
+// =====================================================
+//  NOI Lightbox — gallery-img / work-detail-hero img
+// =====================================================
+(function () {
+  // ライトボックスのHTML要素を生成してbodyに追加
+  var lb = document.createElement("div");
+  lb.className = "noi-lightbox";
+  lb.innerHTML = '<div class="noi-lightbox-close" aria-label="閉じる"></div><img class="noi-lightbox-img" src="" alt="" />';
+  document.body.appendChild(lb);
+
+  var lbImg = lb.querySelector(".noi-lightbox-img");
+  var lbClose = lb.querySelector(".noi-lightbox-close");
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || "";
+    lb.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lb.classList.remove("is-open");
+    document.body.style.overflow = "";
+    // 閉じたあと少し待ってsrcをクリア（フリッカー防止）
+    setTimeout(function () { lbImg.src = ""; }, 300);
+  }
+
+  // ギャラリー画像 + ヒーロー画像をクリックで拡大
+  document.querySelectorAll(".gallery-img, .work-detail-hero img").forEach(function (img) {
+    img.addEventListener("click", function () {
+      openLightbox(img.src, img.alt);
+    });
+  });
+
+  // 背景クリックで閉じる
+  lb.addEventListener("click", function (e) {
+    if (e.target === lb || e.target === lbClose) {
+      closeLightbox();
+    }
+  });
+
+  // ESCキーで閉じる
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeLightbox();
   });
 })();
