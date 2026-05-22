@@ -42,6 +42,7 @@
   const topbar = document.querySelector(".topbar");
   const menuToggle = document.querySelector(".menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
+  const worksMobileMenu = document.querySelector(".works-sidebar--archive, .works-sidebar--detail");
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -129,6 +130,16 @@
   function initMobileMenu() {
     if (!topbar || !menuToggle || !mobileMenu) return;
 
+    let menuClose = mobileMenu.querySelector(".mobile-menu-close");
+
+    if (!menuClose) {
+      menuClose = document.createElement("button");
+      menuClose.type = "button";
+      menuClose.className = "mobile-menu-close";
+      menuClose.setAttribute("aria-label", "メニューを閉じる");
+      mobileMenu.prepend(menuClose);
+    }
+
     const setOpen = (isOpen) => {
       topbar.classList.toggle("is-menu-open", isOpen);
       menuToggle.setAttribute("aria-expanded", String(isOpen));
@@ -141,6 +152,15 @@
 
     mobileMenu.addEventListener("click", (event) => {
       if (event.target.closest("a")) setOpen(false);
+    });
+
+    menuClose.addEventListener("click", () => {
+      setOpen(false);
+      try {
+        menuToggle.focus({ preventScroll: true });
+      } catch {
+        menuToggle.focus();
+      }
     });
 
     document.addEventListener("click", (event) => {
@@ -242,6 +262,82 @@
       menuToggle.style.margin = "0";
       menuToggle.style.zIndex = "1000";
       menuToggle.style.transform = "none";
+    };
+
+    const requestLock = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(lock);
+    };
+
+    lock();
+    window.addEventListener("load", requestLock, { once: true });
+    window.addEventListener("pageshow", requestLock);
+    window.setTimeout(requestLock, 80);
+    window.setTimeout(requestLock, 260);
+    window.setTimeout(requestLock, 700);
+    window.setInterval(() => {
+      if (mq.matches) lock();
+    }, 80);
+    window.addEventListener("scroll", requestLock, { passive: true });
+    document.addEventListener("scroll", requestLock, { passive: true, capture: true });
+    window.addEventListener("resize", requestLock);
+    window.addEventListener("orientationchange", requestLock);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", requestLock);
+      window.visualViewport.addEventListener("scroll", requestLock, { passive: true });
+    }
+  }
+
+  function initWorksMobileMenuLock() {
+    if (!document.body.classList.contains("sub-page") || !worksMobileMenu) return;
+
+    const mq = window.matchMedia("(max-width: 900px)");
+    let frame = 0;
+
+    const reset = () => {
+      worksMobileMenu.style.position = "";
+      worksMobileMenu.style.top = "";
+      worksMobileMenu.style.left = "";
+      worksMobileMenu.style.width = "";
+      worksMobileMenu.style.zIndex = "";
+      worksMobileMenu.style.margin = "";
+      worksMobileMenu.style.transform = "";
+      worksMobileMenu.style.willChange = "";
+    };
+
+    const lock = () => {
+      frame = 0;
+
+      if (!mq.matches) {
+        reset();
+        return;
+      }
+
+      const viewportWidth = Math.round(
+        (window.visualViewport && window.visualViewport.width) ||
+        document.documentElement.clientWidth ||
+        window.innerWidth ||
+        430
+      );
+      const viewportPageTop = Math.round(
+        (window.visualViewport && window.visualViewport.pageTop) ||
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        0
+      );
+      const viewportOffsetLeft = Math.round((window.visualViewport && window.visualViewport.offsetLeft) || 0);
+      const phoneWidth = Math.min(viewportWidth, 500);
+      const menuWidth = Math.max(0, Math.min(viewportWidth - 28, phoneWidth - 28));
+      const menuTop = 96;
+
+      worksMobileMenu.style.position = "absolute";
+      worksMobileMenu.style.top = `${viewportPageTop + menuTop}px`;
+      worksMobileMenu.style.left = `${viewportOffsetLeft + Math.round((viewportWidth - menuWidth) / 2)}px`;
+      worksMobileMenu.style.width = `${menuWidth}px`;
+      worksMobileMenu.style.zIndex = "2147482000";
+      worksMobileMenu.style.margin = "0";
+      worksMobileMenu.style.transform = "none";
+      worksMobileMenu.style.willChange = "top, left";
     };
 
     const requestLock = () => {
@@ -513,6 +609,7 @@
     requestAnimationFrame(update);
   }
 
+
   function scrollToTopHash(hash, behavior = "smooth") {
     if (!hash) return false;
     const targetId = hash.replace(/^#/, "");
@@ -567,7 +664,12 @@
 
       const url = new URL(link.getAttribute("href"), window.location.href);
       const currentUrl = new URL(window.location.href);
-      if (url.origin !== currentUrl.origin || url.pathname !== currentUrl.pathname || !url.hash) return;
+      if (
+        url.origin !== currentUrl.origin ||
+        url.pathname !== currentUrl.pathname ||
+        url.search !== currentUrl.search ||
+        !url.hash
+      ) return;
 
       event.preventDefault();
       window.history.pushState(null, "", url.hash);
@@ -598,67 +700,10 @@
   initSkillTitleLines();
   initMobileMenu();
   initSubPageHeaderLock();
+  initWorksMobileMenuLock();
   initTopHashNavigation();
   update();
 })();
-
-
-// --- Hero Poster Sub Pages ---
-document.addEventListener('DOMContentLoaded', () => {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const workItems = document.querySelectorAll('.work-item');
-
-  if (filterBtns.length && workItems.length) {
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach((item) => item.classList.remove('active'));
-        btn.classList.add('active');
-        const filterValue = btn.getAttribute('data-filter');
-
-        workItems.forEach((item) => {
-          const categories = item.getAttribute('data-category') || '';
-          const shouldShow = filterValue === 'all' || categories.includes(filterValue);
-          item.hidden = !shouldShow;
-        });
-      });
-    });
-  }
-
-  const galleryImages = document.querySelectorAll('.gallery-img, .work-detail-hero img');
-  if (galleryImages.length) {
-    const lightbox = document.createElement('div');
-    lightbox.className = 'noi-lightbox';
-    lightbox.innerHTML = '<button class="noi-lightbox-close" type="button" aria-label="閉じる"></button><img class="noi-lightbox-img" src="" alt="" />';
-    document.body.appendChild(lightbox);
-
-    const lightboxImage = lightbox.querySelector('.noi-lightbox-img');
-    const closeButton = lightbox.querySelector('.noi-lightbox-close');
-
-    function closeLightbox() {
-      lightbox.classList.remove('is-open');
-      document.body.style.overflow = '';
-      window.setTimeout(() => {
-        lightboxImage.src = '';
-      }, 240);
-    }
-
-    galleryImages.forEach((image) => {
-      image.addEventListener('click', () => {
-        lightboxImage.src = image.currentSrc || image.src;
-        lightboxImage.alt = image.alt || '';
-        lightbox.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    lightbox.addEventListener('click', (event) => {
-      if (event.target === lightbox || event.target === closeButton) closeLightbox();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
-    });
-  }
-});
 
 
 // --- Hero Poster Sub Pages Robust Init ---
@@ -742,5 +787,134 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded', initSubPageInteractions);
   } else {
     initSubPageInteractions();
+  }
+})();
+
+// --- Contact Form Formspree AJAX Submit ---
+(() => {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const confirmBox  = document.getElementById('contact-confirm');
+  const confirmTable = document.getElementById('contact-confirm-table');
+  const backBtn     = document.getElementById('contact-back-btn');
+  const sendBtn     = document.getElementById('contact-send-btn');
+  const success     = document.getElementById('contact-success');
+  const firstInput = form.querySelector('input, textarea, button');
+
+  if (confirmBox.parentElement !== document.body) {
+    document.body.appendChild(confirmBox);
+  }
+
+  const labels = { name: 'お名前', kana: 'フリガナ', email: 'メールアドレス', tel: '電話番号', message: 'お問い合わせ内容' };
+
+  function escapeHtml(value) {
+    return value.replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    })[char]);
+  }
+
+  function fadeIn(el) {
+    el.removeAttribute('hidden');
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.4s ease';
+    requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; }));
+  }
+
+  function openConfirm() {
+    fadeIn(confirmBox);
+    document.body.classList.add('is-contact-modal-open');
+    backBtn.focus({ preventScroll: true });
+  }
+
+  function closeConfirm() {
+    confirmBox.hidden = true;
+    confirmBox.style.opacity = '';
+    document.body.classList.remove('is-contact-modal-open');
+    if (firstInput) firstInput.focus({ preventScroll: true });
+  }
+
+  // STEP1: 送信ボタン → 確認画面へ
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    confirmTable.innerHTML = '';
+    for (const [key, label] of Object.entries(labels)) {
+      const val = (data.get(key) || '').trim();
+      if (!val) continue;
+      const row = document.createElement('div');
+      row.className = 'contact-confirm-row';
+      row.innerHTML = `<dt>${label}</dt><dd>${escapeHtml(val).replace(/\n/g, '<br />')}</dd>`;
+      confirmTable.appendChild(row);
+    }
+    openConfirm();
+  });
+
+  // STEP2: 戻るボタン
+  backBtn.addEventListener('click', () => {
+    closeConfirm();
+  });
+
+  confirmBox.addEventListener('click', (event) => {
+    if (event.target === confirmBox) closeConfirm();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !confirmBox.hidden) closeConfirm();
+  });
+
+  // STEP3: 送信実行
+  sendBtn.addEventListener('click', async () => {
+    sendBtn.disabled = true;
+    sendBtn.querySelector('span').textContent = 'SENDING...';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        confirmBox.hidden = true;
+        document.body.classList.remove('is-contact-modal-open');
+        fadeIn(success);
+      } else {
+        sendBtn.disabled = false;
+        sendBtn.querySelector('span').textContent = 'SEND';
+        alert('送信に失敗しました。時間をおいて再度お試しください。');
+      }
+    } catch {
+      sendBtn.disabled = false;
+      sendBtn.querySelector('span').textContent = 'SEND';
+      alert('通信エラーが発生しました。時間をおいて再度お試しください。');
+    }
+  });
+})();
+
+// --- Price Section URL Parameter Toggle ---
+(() => {
+  const priceSection = document.getElementById('price-section');
+  if (!priceSection) return;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('price') === 'show') {
+    priceSection.removeAttribute('hidden');
+    priceSection.style.opacity = '0';
+    priceSection.style.transition = 'opacity 0.6s ease';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        priceSection.style.opacity = '1';
+        if (window.location.hash === '#price-section') {
+          window.setTimeout(() => {
+            priceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 80);
+        }
+      });
+    });
   }
 })();

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /background-image-motion.html
+Disallow: /HANDOFF-CODEX.md
+Disallow: /HANDOFF.md
+Disallow: /PLAN-PARTNER-DEPLOY.md
+Disallow: /mobile-hero-ideas/
+
+Sitemap: https://noi-design.jp/sitemap.xml

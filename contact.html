@@ -3,16 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NOI | Contact</title>
+    <title>Contact | NOIへの制作相談・お問い合わせ</title>
+    <meta name="description" content="Webサイト制作、LPデザイン、バナー制作、AI活用、外部パートナー協業のご相談はこちら。公式LINEまたはメールフォームからお問い合わせください。" />
+    <link rel="canonical" href="https://noi-design.jp/contact.html" />
+    <meta property="og:site_name" content="NOI" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Contact | NOIへの制作相談・お問い合わせ" />
+    <meta property="og:description" content="Webサイト制作、LPデザイン、バナー制作、AI活用、外部パートナー協業のご相談はこちら。公式LINEまたはメールフォームからお問い合わせください。" />
+    <meta property="og:url" content="https://noi-design.jp/contact.html" />
+    <meta property="og:image" content="https://noi-design.jp/assets/images/NOI.png" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact | NOIへの制作相談・お問い合わせ" />
+    <meta name="twitter:description" content="Webサイト制作、LPデザイン、バナー制作、AI活用、外部パートナー協業のご相談はこちら。公式LINEまたはメールフォームからお問い合わせください。" />
+    <meta name="twitter:image" content="https://noi-design.jp/assets/images/NOI.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TOP","item":"https://noi-design.jp/"},{"@type":"ListItem","position":2,"name":"CONTACT","item":"https://noi-design.jp/contact.html"}]}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=sub-header-mobile-34" />
-    <script src="js/main.js?v=sub-header-mobile-34" defer></script>
+    <link rel="icon" type="image/png" sizes="260x260" href="assets/images/favicon.png?v=favicon-01" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png?v=favicon-01" />
+    <link rel="apple-touch-icon" href="assets/images/favicon.png?v=favicon-01" />
+
+    <link rel="stylesheet" href="css/style.css?v=partner-phase12-30" />
+    <script src="js/main.js?v=partner-phase12-30" defer></script>
   </head>
   <body class="has-hologram-video sub-page">
     <div class="hologram-video-layer" aria-hidden="true">
-      <video src="assets/video/hologram.mp4" autoplay loop muted playsinline preload="auto"></video>
+      <video src="assets/video/hologram.mp4" autoplay loop muted playsinline preload="metadata"></video>
     </div>
     <header class="topbar topbar--sub" aria-label="Main navigation">
       <a class="logo" href="index.html#fv">NOI</a>
@@ -32,6 +50,7 @@
         <a href="about.html">ABOUT</a>
         <a href="works/index.html">WORKS</a>
         <a href="service.html">SERVICE</a>
+        <a href="partner.html">PARTNER</a>
         <a href="contact.html" aria-current="page">CONTACT</a>
       </nav>
       <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
@@ -39,6 +58,7 @@
         <a href="about.html">ABOUT</a>
         <a href="works/index.html">WORKS</a>
         <a href="service.html">SERVICE</a>
+        <a href="partner.html">PARTNER</a>
         <a href="contact.html" aria-current="page">CONTACT</a>
       </nav>
     </header>
@@ -73,7 +93,26 @@
                 通常土日を除く3営業日以内に内容を確認の上、メールにてご連絡させていただきます。
               </p>
             </div>
-            <form class="contact-form">
+            <div class="contact-line-card" aria-label="公式LINEで相談する">
+              <p class="contact-line-tag">公式LINE</p>
+              <h2>LINEで相談する</h2>
+              <p>
+                まだ内容がまとまっていない段階でも<br />
+                大丈夫です。<br />
+                ちょっとでも聞いてみたいことがあれば、<br />
+                公式LINEからお気軽にご相談ください。
+              </p>
+              <a href="https://lin.ee/SG3iUKx" class="contact-line-btn" target="_blank" rel="noopener noreferrer"><span>OFFICIAL LINE</span></a>
+            </div>
+            <div class="contact-mail-intro">
+              <p class="contact-mail-tag">メールでのお問い合わせ</p>
+              <p>
+                ご依頼内容やご予算、公開希望時期などが決まっている場合は、<br />
+                下記フォームからお送りください。確認後、メールにてご連絡いたします。
+              </p>
+            </div>
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/mlgvnejy" method="POST">
+              <input type="hidden" name="_language" value="ja" />
               <div class="form-group">
                 <label>お名前 <span class="required">※</span></label>
                 <input type="text" name="name" required />
@@ -84,7 +123,7 @@
               </div>
               <div class="form-group">
                 <label>メールアドレス <span class="required">※</span></label>
-                <input type="email" name="email" required />
+                <input type="email" name="email" autocomplete="email" inputmode="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="メールアドレスは example@example.com の形式で入力してください。" required />
               </div>
               <div class="form-group">
                 <label>電話番号</label>
@@ -94,10 +133,29 @@
                 <label>お問い合わせ内容 <span class="required">※</span></label>
                 <textarea rows="6" name="message" required></textarea>
               </div>
-              <button type="submit" class="contact-submit-btn">
+              <button type="submit" class="contact-submit-btn" id="contact-submit-btn">
                 <span>SEND MESSAGE</span>
               </button>
             </form>
+            <div class="contact-modal-overlay" id="contact-confirm" hidden aria-modal="true" role="dialog" aria-label="送信内容の確認">
+              <div class="contact-modal-box">
+                <p class="contact-confirm-tag">確認画面</p>
+                <h2 class="contact-confirm-title">送信内容の確認</h2>
+                <p class="contact-confirm-lead">
+                  以下の内容でお間違いないかご確認ください。<br />
+                  修正する場合はBACKを押してください。
+                </p>
+                <dl class="contact-confirm-table" id="contact-confirm-table"></dl>
+                <div class="contact-confirm-actions">
+                  <button type="button" class="contact-back-btn" id="contact-back-btn"><span>BACK</span></button>
+                  <button type="button" class="contact-submit-btn" id="contact-send-btn"><span>SEND</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="contact-success" id="contact-success" hidden>
+              <p class="contact-success-title">THANK YOU.</p>
+              <p class="contact-success-body">お問い合わせありがとうございます。<br />内容を確認の上、3営業日以内にご連絡いたします。</p>
+            </div>
           </section>
         </div>
       </div>
@@ -113,8 +171,8 @@
             with NOI！
           </p>
           <div class="footer-socials" aria-label="SNS">
-            <img src="assets/images/instagram.png" alt="Instagram" />
-            <img src="assets/images/x.png" alt="X" />
+            <a href="https://www.instagram.com/chum.portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Instagramを開く"><img src="assets/images/instagram.png" alt="Instagram" /></a>
+            <a href="https://x.com/chimcham1216" target="_blank" rel="noopener noreferrer" aria-label="Xを開く"><img src="assets/images/x.png" alt="X" /></a>
           </div>
           <p class="footer-copy">©2026 NOI</p>
         </footer>
