@@ -3665,6 +3665,58 @@ body.has-hologram-video .sub-page .service-price-section::after {
   line-height: 1.8;
 }
 
+.sub-page .work-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.sub-page .work-detail-link::after {
+  content: "CLICK";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(221, 255, 22, 0.72);
+  color: var(--violet-deep);
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  transform: translateY(-1px);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sub-page .work-detail-link:hover,
+.sub-page .work-detail-link:focus-visible {
+  color: var(--lime);
+  border-color: var(--lime);
+  transform: translateY(-1px);
+}
+
+.sub-page .work-detail-link:hover::after,
+.sub-page .work-detail-link:focus-visible::after {
+  background: var(--lime);
+  color: var(--violet-deep);
+  box-shadow: 0 0 0 4px rgba(221, 255, 22, 0.14);
+}
+
 .sub-page .work-detail-gallery {
   display: flex;
   flex-direction: column;

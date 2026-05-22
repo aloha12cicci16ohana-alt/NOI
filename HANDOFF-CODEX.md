@@ -1,9 +1,170 @@
 # Codex 引き継ぎ書 — NOI hero-poster リニューアル
 
+## 最新ログ：2026-05-22 Phase 1+2 仕上げ（Codex）
+
+### 今日の到達点
+
+- 作業フォルダーは `/Users/chiikoba/Desktop/NOI_WEB`。
+- `PLAN-PARTNER-DEPLOY.md` の Phase 1+2 を仕上げ。
+- SERVICEのPriceセクションは通常URLでは非表示、`service.html?price=show` で表示。
+- SERVICE下部に制作会社・代理店向けのPartner導線を追加済み。
+- `partner.html` をサブページテンプレート構造で作成済み。
+- 全HTMLのPC/スマホナビに `PARTNER` を追加済み。
+- `sitemap.xml` は `https://noi-design.jp/` ベースへ更新済み。
+- CSS/JSキャッシュは全HTMLで `partner-phase12-31` に統一。
+- スマホ幅でroot側の横スクロールが出ないよう、`html { overflow-x: hidden; }` を追加。
+- 追加調整：SERVICEのPartner導線本文を中央揃え、SERVICE/Partner両方のCTAボタン下に72px余白を追加。
+- 追加調整：Partner下部CTA文を3行固定改行に変更。
+- 追加調整：Partnerページの対応可能領域から「動画制作」を削除。Service側の顧客向け表記は維持。
+- 追加調整：Partnerページの「制作フロー」を、制作会社向けの「協業スタンス」に差し替え。
+- 追加調整：TOPフッターの英語コピーとコピーライトを下層ページの文字サイズに統一。
+- 追加調整：Works一覧カードに「実案件」「自主制作」「トレース」の種別バッジを追加。
+- 追加調整：TOP FVの英語サービスライン下に「Webサイト制作 ・ LPデザイン ・ バナー ・ AI活用」を10px太字で追加し、字間と薄いシャドウで濃く見えるよう調整。
+- 追加調整：スマホハンバーガーメニュー内リンクはhover / focus-visible時に文字色をライムへ変更し、左へ太めのライム線を表示。閉じるボタンもライム色へ変更。
+- 追加調整：ServiceページのFlow下にPrice導線を追加し、`service.html?price=show#price-section` で価格表へ移動するように変更。
+- 追加修正：Price導線クリック時にページ内アンカーJSが `?price=show` を消してしまう問題を修正。
+- 追加調整：Price表示セクション右上に閉じる×ボタンを追加し、閉じるとPrice導線位置へ戻るように変更。
+- 追加調整：ServiceページのFlow下Price導線の上余白を36pxに変更し、Flow内の続きとして見えるように調整。
+- 追加調整：Serviceページ下部のFor Partners導線を白背景カード化し、白背景がガラス枠の横幅いっぱいに広がるよう調整。
+- 追加調整：Serviceページ下部For Partners本文の改行を「制作会社・代理店のみなさまへ。／外部パートナーとしての協業／下請けのご相談を／承っております。」へ変更。
+- 追加調整：Serviceページ下部For Partners見出しに既存のキラン効果を追加。
+- 追加修正：PC下層ページのガラス角丸外に薄い四角い疑似レイヤーが見える問題を修正。
+- 追加調整：レスポンシブ時のヘッダーNOIロゴの乗算は、ブランド色が変わって見えやすいため取りやめ。モバイル時も元の紫色を維持。
+- 追加調整：Contactページのリード文下に公式LINE相談カードを実装。
+- 追加調整：Contactページの公式LINEボタンを `https://lin.ee/SG3iUKx` へ接続。
+- 追加調整：Contactフォーム前に「メールでのお問い合わせ」の説明文を追加。
+- 追加調整：全ページフッターのInstagram / Xアイコンを外部リンクへ接続。
+- 追加調整：全HTMLのheadに、ブラウザタブ表示用として `assets/images/favicon.png?v=favicon-01` のfavicon / shortcut icon / apple-touch-icon設定を追加。
+- 追加調整：SEO/AI検索向けに、全公開HTMLへtitle / description / canonical / OGP / Twitter Card / 構造化データを追加。
+- 追加調整：`robots.txt` と `llms.txt` を追加し、`sitemap.xml` のlastmodを `2026-05-22` に更新。
+- 追加調整：`_headers` を追加し、作業メモ・プレビュー用ファイルに `X-Robots-Tag: noindex, nofollow` を設定。
+- 追加調整：Works詳細16ページのdescription / OGP description / Twitter descriptionを案件別文言へ差し替え。
+- 追加修正：Contactフォームの確認モーダルをNOIの白ガラス調に作り直し、フォームを隠さず前面に重ねる動作へ変更。BACK / 背景クリック / Escで戻れるよう調整し、モーダル表示中は背面スクロールを止めるように調整。
+- 追加調整：Works詳細のWebsiteリンクに `CLICK` バッジを追加し、hover / focus-visible時にリンク文字と下線がライムになるよう調整。
+
+### 今日の検証
+
+- `node --check js/main.js` OK。
+- `git diff --check` OK。
+- 旧cache slug（`mobile-lightbox-align-02` / `partner-01` / `sub-header-mobile-34`）がHTMLに残っていないことを確認。
+- `sitemap.xml` に旧GitHub Pages URLと `hero-poster` が残っていないことを確認。
+- ブラウザ確認：
+  - `service.html`：Price非表示。
+  - `service.html?price=show`：Price表示。
+  - `partner.html`：PC 1366px、スマホ390pxで表示。
+  - `works/index.html`：スマホ430pxでPARTNERナビと横スクロールなし。
+  - `contact.html`：スマホ390pxでPARTNERナビと横スクロールなし。
+- 追加確認：
+  - SERVICE Partner導線の本文中央揃え、ボタン下72px。
+  - Partner下部CTAの3行改行、ボタン下72px。
+  - Partnerページに「動画制作」が表示されないこと。
+  - Partnerページに「制作フロー」「お見積りをご提示」「納品後の修正対応」が残っていないこと。
+  - TOPフッターの英語コピーとコピーライトが下層ページと同じ14pxになること。
+  - Works一覧の全カードに種別バッジが表示され、カテゴリーフィルターが維持されること。
+  - TOP FVの日本語サービスラインが10px太字・中黒区切りで、濃く見えつつ390px / 430px / PC幅で重ならず表示されること。
+  - スマホハンバーガーメニュー内リンクがhover / focus-visible時にライム文字＋左ライム線を表示し、閉じるボタンがライム色になること。
+  - ServiceページのPrice導線から、価格表表示URLへ移動できること。
+  - Price導線クリック時に `service.html?price=show#price-section` へ遷移し、価格表が表示されること。
+  - Priceセクション右上の×ボタンで `service.html#price-link` へ戻り、価格表が閉じること。
+  - FlowとPrice導線の間が36pxになっていること。
+  - Serviceページ下部のFor Partners導線が白背景カードとして表示され、白背景がガラス枠の横幅いっぱいまで広がること。
+  - PC下層ページのガラス開始位置で、角丸の外側に四角い薄い背景が残らないこと。
+  - レスポンシブ時のヘッダーNOIロゴが元の紫色で表示されること。
+  - Contactページに公式LINE相談カードが表示されること。
+  - 公式LINE / Instagram / X の外部リンクが設定されていること。
+  - Contactフォーム前に「メールでのお問い合わせ」説明が表示されること。
+  - 全HTMLにfavicon設定が入っていること。
+  - 公開対象ページにSEO/OGP/canonical/構造化データが入っていること。
+  - `robots.txt` / `llms.txt` / `_headers` が存在すること。
+  - Works詳細ページのdescriptionが案件ごとに固有化されていること。
+  - Contactフォームの確認モーダルがNOIのデザインに合い、送信前確認として開閉できること。
+  - Contactフォームの確認モーダルがbody直下に移動して前面表示され、BACK / 送信成功時の表示切り替えが動くこと。
+  - Works詳細のWebsiteリンクに `CLICK` バッジが表示され、hoverでライムになること。
+
+### 未対応・次にやること
+
+- Phase 3：Cloudflare Pages公開、DNS、独自ドメイン設定。
+- Contactフォームの正式な送信基盤は未確定。現状はHTMLにFormspree endpointが入っているため、公開前に最終採用する送信先（Formspree継続 / Cloudflare Workers等）を決める。
+- 公開前に実機スマホでもPartnerページとWorks周りを最終確認すると安心。
+
+### 主な変更ファイル
+
+- `index.html` / `about.html` / `service.html` / `contact.html` / `privacy.html` / `404.html`
+- `works/index.html` / `works/works01.html`〜`works/works16.html`
+- `partner.html`
+- `css/style.css`
+- `js/main.js`
+- `sitemap.xml`
+- `HANDOFF-CODEX.md`
+
 **日付：** 2026-05-08
 **作成者：** Claude（Sonnet）
 **読み手：** Codex（修正担当）
 **指示者：** CHUM さん（NOI 代表）
+
+---
+
+
+## 最新ログ：2026-05-19 作業ログ（Codex / CHUM さん確認中）
+
+### 今日の到達点
+
+- 作業フォルダーは `/Users/chiikoba/Desktop/NOI_WEB`。
+- Works一覧・Works詳細のスマホカテゴリーメニューを、Worksガラスの外へ分離。
+- スマホ時のカテゴリーメニューは薄いガラスパネル、14px文字、横並び＋折り返し。
+- `works/index.html` では `.works-sidebar--archive` を `.sub-glass-column` の外へ移動済み。
+- Works詳細ページでは既存の `.works-sidebar--detail` を活かしてスマホでも表示。
+- 以前追加した `initWorksFilterLock()` は削除済み。
+- Chrome DevToolsスマホ検証で、`position: fixed` だけだと下スクロール時にメニューが上へ流れる問題が再発。
+- 下層スマホヘッダーと同じ発想で、`js/main.js` に `initWorksMobileMenuLock()` を追加し、`visualViewport.pageTop + 固定位置` でカテゴリーメニュー位置を追従する方式へ変更。
+- フィルター機能は既存HTML/JSのまま維持。`?filter=banner` で絞り込み動作確認済み。
+- CSS/JSキャッシュは最終的に `mobile-lightbox-align-02`。
+
+### 今日ハマった重要ポイント
+
+- Chrome DevTools のスマホ検証では、実機より `fixed` / `absolute` / `visualViewport` / DevTools倍率の影響が強く出る。
+- Worksカテゴリーメニューは、CSSの `position: sticky` や `fixed` だけでは安定しなかった。
+- 実ブラウザでDevToolsを開いた状態だと、古いCSSクエリが残りやすい。確認時は強制リロード、またはURLに `?cache=...` を付ける。
+- 今日の後半、ライトボックス表示で作品画像をクリックした時に、画像と閉じるマークがずれて見える問題が残った。
+- ライトボックス処理は重複していた古い `DOMContentLoaded` ブロックを削除済み。現在は `initSubPageInteractions()` 側のライトボックス処理のみ。
+- `.noi-lightbox` は `z-index: 2147483500`、閉じるボタンは `z-index: 2147483600` に上げて、カテゴリーメニューより前面に出すよう調整済み。
+- スマホ時の `.noi-lightbox-img` は `display: block; margin: 0 auto; width: min(360px, calc(100vw - 44px));` に調整済み。
+- スマホ時の閉じるボタンは `right: max(18px, calc((100vw - 430px) / 2 + 18px));` に調整済み。
+- ただし、CHUMさん確認ではまだライトボックス画像・閉じるマークのズレが気になるため、明日再調整。
+
+### 明日最初に見ること
+
+- `file:///Users/chiikoba/Desktop/NOI_WEB/works/works01.html?cache=mobile-lightbox-align-02`
+- Chrome DevTools iPhone 14 Pro Max / iPhone 12 Pro で確認。
+- 作品詳細ページで下へスクロールし、`PCデザイン` の画像をクリック。
+- ライトボックス内の縦長画像がスマホ幅の中央に来るか確認。
+- 閉じるマークがスマホ画面の右上に自然に出るか確認。
+- DevTools由来のズレか、CSS/JS側のズレか切り分ける。
+- 可能なら実機Safari/Chromeでも同じページを開いて比較する。
+
+### 明日の修正候補
+
+- ライトボックスを `display: grid` に戻しつつ、スマホ時のみ中に `.noi-lightbox-frame` のようなラッパーを作る案。
+- またはJSでライトボックス表示時に `visualViewport.width` と `offsetLeft` を見て、画像と閉じるボタン位置を直接ロックする案。
+- 閉じるマークは画像基準ではなく、スマホビューポート基準の右上固定にするのが自然そう。
+- 縦長画像は「全体を無理に1画面へ縮小」ではなく、「スマホ幅に収めてライトボックス内スクロール」で継続。
+- もしDevTools検証だけズレるなら、実機確認後に許容判断。
+
+### 今日の検証
+
+- `node --check js/main.js` OK。
+- `git diff --check` OK。
+- Works一覧のPC幅は既存の左固定カテゴリーメニュー表示を確認済み。
+- Works一覧のスマホ表示は、カテゴリーメニューがWorksガラス外・上部に残る状態を確認済み。
+- Works詳細のスマホ表示も、カテゴリーメニューが上部に残る状態を確認済み。
+
+### 主な変更ファイル
+
+- `works/index.html`
+- `works/works*.html`
+- `css/style.css`
+- `js/main.js`
+- `HANDOFF-CODEX.md`
 
 ---
 
